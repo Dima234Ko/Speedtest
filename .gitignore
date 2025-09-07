@@ -1,1 +1,5 @@
-/node_modules
+sert/
+node_modules/
+public/
+dist/
+vite.config.js
