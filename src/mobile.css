@@ -10,6 +10,14 @@
     .button {
         width: 300px;
     }
+
+    .speed__contanier {
+        gap: 12px;
+    }
+
+    .progress-text {
+        padding: 14px;
+    }
 }
 
 @media (max-width: 350px) {
