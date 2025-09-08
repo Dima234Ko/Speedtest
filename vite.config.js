@@ -63,20 +63,20 @@ export default defineConfig({
       key: fs.readFileSync('./sert/key.txt'),
       cert: fs.readFileSync('./sert/sv_en_ru_2026_08_08.crt'),
     },
-    proxy: {
-      '/backend': {
-        target: 'http://172.24.6.13/backend',
-        changeOrigin: false,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/backend/, ''),
-      },
-      '/results': { // Добавлено новое правило для /results
-        target: 'http://172.24.6.13/results',
-        changeOrigin: false,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/results/, ''),
-      },
-    },
+    // proxy: {
+    //   '/backend': {
+    //     target: 'http://172.24.6.13/backend',
+    //     changeOrigin: false,
+    //     secure: false,
+    //     rewrite: (path) => path.replace(/^\/backend/, ''),
+    //   },
+    //   '/results': { // Добавлено новое правило для /results
+    //     target: 'http://172.24.6.13/results',
+    //     changeOrigin: false,
+    //     secure: false,
+    //     rewrite: (path) => path.replace(/^\/results/, ''),
+    //   },
+    // },
   },
   preview: {
     port: 9444,
@@ -86,19 +86,19 @@ export default defineConfig({
       key: fs.readFileSync('./sert/key.txt'),
       cert: fs.readFileSync('./sert/sv_en_ru_2026_08_08.crt'),
     },
-    proxy: {
-      '/backend': {
-        target: 'http://172.24.6.13/backend',
-        changeOrigin: false,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/backend/, ''),
-      },
-      '/results': { // Добавлено новое правило для /results
-        target: 'http://172.24.6.13/results',
-        changeOrigin: false,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/results/, ''),
-      },
-    },
+    // proxy: {
+    //   '/backend': {
+    //     target: 'http://172.24.6.13/backend',
+    //     changeOrigin: false,
+    //     secure: false,
+    //     rewrite: (path) => path.replace(/^\/backend/, ''),
+    //   },
+    //   '/results': { // Добавлено новое правило для /results
+    //     target: 'http://172.24.6.13/results',
+    //     changeOrigin: false,
+    //     secure: false,
+    //     rewrite: (path) => path.replace(/^\/results/, ''),
+    //   },
+    // },
   },
 });

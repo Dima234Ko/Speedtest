@@ -45,10 +45,10 @@ let settings = {
     time_ulGraceTime: 3, // время ожидания перед измерением загрузки (сек)
     time_dlGraceTime: 2, // время ожидания перед измерением скачивания (сек)
     count_ping: 10, // количество пингов для теста
-    url_dl: "/backend/garbage.php", // путь к файлу для теста скачивания
-    url_ul: "/backend/empty.php", // путь к файлу для теста загрузки
-    url_ping: "/backend/empty.php", // путь к файлу для теста пинга
-    url_getIp: "/backend/getIP.php", // путь к getIP.php
+    url_dl: "https://r1.sv-en.ru:6443/backend/garbage.php", // путь к файлу для теста скачивания
+    url_ul: "https://r1.sv-en.ru:6443/backend/empty.php", // путь к файлу для теста загрузки
+    url_ping: "https://r1.sv-en.ru:6443/backend/empty.php", // путь к файлу для теста пинга
+    url_getIp: "https://r1.sv-en.ru:6443/backend/getIP.php", // путь к getIP.php
     getIp_ispInfo: true, // включать информацию об ISP с IP
     getIp_ispInfo_distance: "km", // оценка расстояния до сервера в км/милях
     xhr_dlMultistream: 10, // количество потоков скачивания
@@ -63,7 +63,7 @@ let settings = {
     overheadCompensationFactor: 1.1, // компенсация накладных расходов
     useMebibits: false, // использовать мебибиты вместо мегабит
     telemetry_level: 0, // 0=откл, 1=базовый, 2=полный, 3=отладка
-    url_telemetry: "/results/telemetry.php", // путь к скрипту телеметрии
+    url_telemetry: "https://r1.sv-en.ru:6443/results/telemetry.php", // путь к скрипту телеметрии
     telemetry_extra: "", // доп. данные для телеметрии
     forceIE11Workaround: false // обходной путь для IE11
 };
