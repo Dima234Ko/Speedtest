@@ -41,9 +41,9 @@ function App() {
   // вычисление заполнения шкалы
   const getProgress = (value) => {
     if (!value) return 0;
-    let max = 100;
-    if (value > 100 && value <= 1000) max = 1000;
-    else if (value > 1000) max = 5000;
+    let max = 150;
+    if (value > 150 && value <= 1100) max = 1100;
+    else if (value > 1100) max = 5000;
     return Math.min(100, (value / max) * 100);
   };
 
@@ -108,9 +108,7 @@ function App() {
                   className="progress-bar"
                   style={{ width: `${getProgress(uiData?.dlStatus)}%` }}>
                 <div
-                  className={`progress-text ${
-                    getProgress(uiData?.dlStatus) < 16 ? "low" : "normal"
-                  }`}
+                  className={`progress-text ${uiData?.dlStatus === undefined || uiData?.dlStatus < 10 ? "low" : "normal"}`}
                 >
                   {format(uiData?.dlStatus || 0)} Mbit/s
                 </div>
@@ -126,9 +124,7 @@ function App() {
                   className="progress-bar"
                   style={{ width: `${getProgress(uiData?.ulStatus)}%` }}>
                   <div
-                  className={`progress-text ${
-                    getProgress(uiData?.ulStatus) < 16 ? "low" : "normal"
-                  }`}
+                  className={`progress-text ${uiData?.dlStatus === undefined || uiData?.dlStatus < 10 ? "low" : "normal"}`}
                   >
                   {format(uiData?.ulStatus || 0)} Mbit/s
                   </div>

@@ -1,5 +1,19 @@
-@media (max-width: 580px) {
+@media (max-width: 650px) {
     .testWrapper {
-        width: 90%;
-      }
+        width: 300px;
+    }
+
+    .progress-bar {
+        min-width: 15%;
+    }
+}
+
+@media (max-width: 350px) {
+    .testWrapper {
+        width: 200px;
+    }
+
+    .progress-bar {
+        min-width: 19%;
+    }
 }
