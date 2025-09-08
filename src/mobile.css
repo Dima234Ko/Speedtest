@@ -6,6 +6,10 @@
     .progress-bar {
         min-width: 15%;
     }
+
+    .button {
+        width: 300px;
+    }
 }
 
 @media (max-width: 350px) {
@@ -15,5 +19,9 @@
 
     .progress-bar {
         min-width: 19%;
+    }
+
+    .button {
+        width: 200px;
     }
 }

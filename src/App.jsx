@@ -38,7 +38,6 @@ function App() {
     return d.toFixed(0);
   };
 
-  // вычисление заполнения шкалы
   const getProgress = (value) => {
     if (!value) return 0;
     let max = 150;
@@ -49,7 +48,7 @@ function App() {
 
   useEffect(() => {
     clearInterval(timerRef.current);
-  
+
     if (testState === 1 || testState === 3) {
       setTimer(0);
       timerRef.current = setInterval(() => {
@@ -58,7 +57,7 @@ function App() {
     }
     return () => clearInterval(timerRef.current);
   }, [testState]);
-  
+
 
   const startStop = () => {
     if (speedtest.current.getState() === 3) {
@@ -91,62 +90,62 @@ function App() {
   return (
     <ErrorBoundary>
       <div className="testWrapper">
-            {/* Ping */}
-            <div className="ping__container">
-              <div>Ping</div>
-              <div id="pingText" className="meterText">
-                {uiData?.pingStatus ? format(uiData.pingStatus) : ""}
-              </div>
-              <div className="unit">ms</div>
-            </div>
+        {/* Ping */}
+        <div className="ping__contanier">
+          <div>Ping</div>
+          <div id="pingText" className="meterText">
+            {uiData?.pingStatus ? format(uiData.pingStatus) : "0.00"}
+          </div>
+          <div className="unit">ms</div>
+        </div>
 
-            {/* Download */}
-            <div className="speed__contanier">
-              <div>Входящая скорость</div>
-              <div className="progress">
-                <div
-                  className="progress-bar"
-                  style={{ width: `${getProgress(uiData?.dlStatus)}%` }}>
-                <div
-                  className={`progress-text ${uiData?.dlStatus === undefined || uiData?.dlStatus < 10 ? "low" : "normal"}`}
-                >
-                  {format(uiData?.dlStatus || 0)} Mbit/s
-                </div>
+        {/* Download */}
+        <div className="speed__contanier">
+          <div>Входящая скорость</div>
+          <div className="progress">
+            <div
+              className="progress-bar"
+              style={{ width: `${getProgress(uiData?.dlStatus)}%` }}>
+              <div
+                className={`progress-text ${uiData?.dlStatus === undefined || uiData?.dlStatus < 10 ? "low" : "normal"}`}
+              >
+                {format(uiData?.dlStatus || 0)} Mbit/s
               </div>
             </div>
           </div>
-                    
-            {/* Upload */}
-            <div className="speed__contanier">
-              <div>Исходящая скорость</div>
-              <div className="progress">
-                <div
-                  className="progress-bar"
-                  style={{ width: `${getProgress(uiData?.ulStatus)}%` }}>
-                  <div
-                  className={`progress-text ${uiData?.dlStatus === undefined || uiData?.dlStatus < 10 ? "low" : "normal"}`}
-                  >
-                  {format(uiData?.ulStatus || 0)} Mbit/s
-                  </div>
-                </div>
-            </div>
+        </div>
 
-            {/* Таймер */}
-            {testState !== -1 && (
-              <div className="timer">Время теста: {timer} c</div>
-            )}
-
-            {/* IP */}
-            <div id="ipArea">
-              <span id="ip">{uiData?.clientIp}</span>
+        {/* Upload */}
+        <div className="speed__contanier">
+          <div>Исходящая скорость</div>
+          <div className="progress">
+            <div
+              className="progress-bar"
+              style={{ width: `${getProgress(uiData?.ulStatus)}%` }}>
+              <div
+                className={`progress-text ${uiData?.dlStatus === undefined || uiData?.dlStatus < 10 ? "low" : "normal"}`}
+              >
+                {format(uiData?.ulStatus || 0)} Mbit/s
+              </div>
             </div>
           </div>
-            
-          <div
-              className={testState !== -1 ? "button running" : "button stop"}
-              id="startStopBtn"
-              onClick={startStop}
-          >Старт</div>
+        </div>
+
+        {/* Таймер */}
+        {testState !== -1 && (
+          <div className="timer">Время теста: {timer} c</div>
+        )}
+
+        {/* IP */}
+        <div id="ipArea">
+          <span id="ip">{uiData?.clientIp}</span>
+        </div>
+
+        <div
+          className={testState !== -1 && testState !== 4 ? "button running" : "button stop"}
+          id="startStopBtn"
+          onClick={startStop}
+        >Старт</div>
       </div>
     </ErrorBoundary>
   );

@@ -1,10 +1,3 @@
-/*
-	LibreSpeed - Worker
-	by Federico Dossena
-	https://github.com/librespeed/speedtest/
-	GNU LGPLv3 License
-*/
-
 // данные, передаваемые в основной поток
 let testState = -1; // -1=не начат, 0=начало, 1=тест скачивания, 2=тест пинга+джиттера, 3=тест загрузки, 4=завершен, 5=прерван
 let dlStatus = ""; // скорость скачивания в мегабит/с с 2 знаками после запятой
@@ -39,8 +32,8 @@ function twarn(s) {
 let settings = {
     mpot: false, // установить в true для режима MPOT
     test_order: "IP_D_U", // порядок тестов: D=Скачивание, U=Загрузка, P=Пинг+джиттер, I=IP, _=задержка 1 сек
-    time_ul_max: 20, // макс. длительность теста загрузки в секундах
-    time_dl_max: 20, // макс. длительность теста скачивания в секундах
+    time_ul_max: 14, // макс. длительность теста загрузки в секундах
+    time_dl_max: 14, // макс. длительность теста скачивания в секундах
     time_auto: true, // если true, тесты занимают меньше времени на быстрых соединениях
     time_ulGraceTime: 3, // время ожидания перед измерением загрузки (сек)
     time_dlGraceTime: 2, // время ожидания перед измерением скачивания (сек)
@@ -155,10 +148,10 @@ self.addEventListener("message", function(e) {
 			if (test_pointer >= settings.test_order.length) {
 				if (settings.telemetry_level > 0)
 					sendTelemetry(function(id) {
-						testState = -1;
+						testState = 4;
 						if (id != null) testId = id;
 					});
-				else testState = -1;
+				else testState = 4;
 				return;
 			}
 			switch (settings.test_order.charAt(test_pointer)) {
