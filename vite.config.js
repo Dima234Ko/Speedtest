@@ -17,9 +17,9 @@ export default defineConfig({
         'icon-512.png',
       ],
       manifest: {
-        name: 'Связь-энерго (dev)',
-        short_name: 'Связь-энерго (dev)',
-        description: 'Связь-энерго (dev)',
+        name: 'Скорость',
+        short_name: 'Скорость',
+        description: 'Скорость',
         display: 'fullscreen',
         theme_color: '#ffffff',
         background_color: '#ffffff',
@@ -56,21 +56,49 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 5173,
+    port: 9444,
     host: '0.0.0.0',
     open: true,
     https: {
       key: fs.readFileSync('./sert/key.txt'),
       cert: fs.readFileSync('./sert/sv_en_ru_2026_08_08.crt'),
     },
+    proxy: {
+      '/backend': {
+        target: 'http://172.24.6.13/backend',
+        changeOrigin: false,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/backend/, ''),
+      },
+      '/results': { // Добавлено новое правило для /results
+        target: 'http://172.24.6.13/results',
+        changeOrigin: false,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/results/, ''),
+      },
+    },
   },
   preview: {
-    port: 5173,
+    port: 9444,
     host: '0.0.0.0',
     open: true,
     https: {
       key: fs.readFileSync('./sert/key.txt'),
       cert: fs.readFileSync('./sert/sv_en_ru_2026_08_08.crt'),
+    },
+    proxy: {
+      '/backend': {
+        target: 'http://172.24.6.13/backend',
+        changeOrigin: false,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/backend/, ''),
+      },
+      '/results': { // Добавлено новое правило для /results
+        target: 'http://172.24.6.13/results',
+        changeOrigin: false,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/results/, ''),
+      },
     },
   },
 });

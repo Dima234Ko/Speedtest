@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, Component } from 'react';
-import './App.css';
 import Speedtest from './lib/speedtest';
 
 // Граница ошибок
@@ -190,14 +189,6 @@ function App() {
           </div>
         )}
         <div id="testWrapper" className={loading ? "hidden" : "visible"}>
-          <div
-            className={testState === 3 ? "button_running" : "button_stop"}
-            id="startStopBtn"
-            onClick={startStop}
-          >
-            {testState === 3 ? "Стоп" : "Старт"}
-          </div>
-          <br />
           {servers.length > 0 && (
             <div id="serverArea">
               Сервер:{" "}
@@ -233,7 +224,7 @@ function App() {
                 <div id="dlText" className="meterText">
                   {uiData?.dlStatus && testState === 1 && uiData.dlStatus === 0
                     ? "..."
-                    : format(uiData?.dlStatus || 0)}
+                    : format(uiData?.dlStatus * 2  || 0)}
                 </div>
                 <div className="unit">Mbit/s</div>
               </div>
@@ -251,24 +242,13 @@ function App() {
             <div id="ipArea">
               <span id="ip">{uiData?.clientIp}</span>
             </div>
-            {uiData?.testId && (
-              <div id="shareArea">
-                <h3>Поделиться результатами</h3>
-                <p>ID теста: <span id="testId">{uiData.testId}</span></p>
-                <input
-                  type="text"
-                  value={uiData.shareURL}
-                  id="resultsURL"
-                  readOnly
-                  onClick={(e) => {
-                    e.target.select();
-                    document.execCommand('copy');
-                    alert('Ссылка скопирована');
-                  }}
-                />
-                <img src={uiData.shareURL} id="resultsImg" alt="Результат теста" />
-              </div>
-            )}
+                     <div
+            className={testState !== -1 ? "button_running" : "button_stop"}
+            id="startStopBtn"
+            onClick={startStop}
+          >
+            {"Старт"}
+          </div>
           </div>
         </div>
       </div>

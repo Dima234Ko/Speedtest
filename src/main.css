@@ -23,16 +23,13 @@ span.loadCircle {
   width: 2em;
   height: 2em;
   vertical-align: middle;
-  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAP1BMVEUAAAB2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZyFzwnAAAAFHRSTlMAEvRFvX406baecwbf0casimhSHyiwmqgAAADpSURBVHja7dbJbQMxAENRahnN5lkc//5rDRAkDeRgHszXgACJoKiIiIiIiIiIiIiIiIiIiIj4HHspsrpAVhdVVguzrA4OWc10WcEqpwKbnBo0OU1Q5NSpsoJFTgOecrrdEag85DRgktNqfoEdTjnd7hrEHMEJvmRUYJbTYk5Agy6nau6Abp5Cm7mDBtRdPi9gyKdU7w4p1fsLvyqs8hl4z9/w3n/Hmr9WoQ65lAU4d7lMYOz//QboRR5jBZibLMZdAR6O/Vfa1PlxNr3XdS3HzK/HVPRu/KnLs8iAOh993VpRRERERMT/fAN60wwWaVyWwAAAAABJRU5ErkJggg==');
   background-size: 2em 2em;
   margin-right: 0.5em;
   animation: spin 0.6s linear infinite;
 }
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(359deg); }
-}
+
 .button_stop {
+  border-radius: 30px;
   margin-top: 20px;
   text-decoration: none;
   height: 65px;
@@ -44,14 +41,15 @@ span.loadCircle {
   justify-content: center;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.2), inset 0 -2px 2px rgba(0, 0, 0, 0.4);
-  background: linear-gradient(135deg, #003597c5 0%, #134299c5 100%);
+  background: linear-gradient(176deg, #334C74 0%, #6899e7 100%);
   color: white;
 }
 .button_running {
+  border-radius: 30px;
   margin-top: 20px;
   text-decoration: none;
-  height: 55px;
-  width: 300px;
+  height: 65px;
+  width: 360px;
   font-size: 20px;
   cursor: not-allowed;
   align-items: center;
@@ -59,7 +57,7 @@ span.loadCircle {
   justify-content: center;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.2), inset 0 -2px 2px rgba(0, 0, 0, 0.4);
-  background: linear-gradient(135deg, #003597c5 0%, #134299c5 100%);
+  background: linear-gradient(176deg, #334C74 0%, #6899e7 100%);
   color: white;
   opacity: 0.6;
   pointer-events: none;
