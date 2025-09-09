@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, Component } from "react";
+import Dropdown from './Dropdown';
 import Speedtest from "./lib/speedtest";
 
 class ErrorBoundary extends Component {
@@ -87,17 +88,15 @@ function App() {
     }
   };
 
+  const options = [`ООО 'Связь-энерго' Кострома`, `ООО 'Связь-энерго' Мирный`, `ООО 'Связь-энерго' Нерюнгри`];
+  const handleSelect = (option) => {
+    console.log('Выбрана опция:', option);
+  };
+
   return (
     <ErrorBoundary>
       <div className="testWrapper">
-        {/* Ping */}
-        <div className="ping__contanier">
-          <div>Ping</div>
-          <div id="pingText" className="meterText">
-            {uiData?.pingStatus ? format(uiData.pingStatus) : "0.00"}
-          </div>
-          <div className="unit">ms</div>
-        </div>
+        <Dropdown options={options} onSelect={handleSelect} defaultValue="Выбрать сервер..." />
 
         {/* Download */}
         <div className="speed__contanier">
@@ -129,6 +128,15 @@ function App() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Ping */}
+        <div className="ping__contanier">
+          <div>Ping</div>
+          <div id="pingText" className="meterText">
+            {uiData?.pingStatus ? format(uiData.pingStatus) : "0.00"}
+          </div>
+          <div className="unit">ms</div>
         </div>
 
         {/* Таймер */}

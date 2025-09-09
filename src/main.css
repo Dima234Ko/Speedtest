@@ -26,7 +26,7 @@ body {
   position: relative;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 6px 18px rgba(20, 30, 50, 0.08);
   position: relative;
-  background: aliceblue;
+  background: #a6c7fd52;
 }
 
 /* полоска-заливка */
@@ -62,11 +62,11 @@ body {
 }
 
 .progress-text.low {
-  background: #b9d3fd;
+  background: linear-gradient(176deg, #5884be 0%, #a6c8fd 100%);
 }
 
 .progress-text.normal {
-  background: linear-gradient(176deg, #0055b8 0%, #72a6fa 100%);
+  background: linear-gradient(176deg, #386094 0%, #72a6fa 100%);
 }
 
 .testWrapper {
@@ -87,8 +87,8 @@ body {
   color: #45679c;
   border-radius: 50px;
   padding: 10px 24px;
-  box-shadow: inset 0 0 10px 1px rgb(43 115 208), 4px 3px 8px rgb(74 136 231 / 20%);
-  border: #5982c5 solid 1px;
+  box-shadow: inset 0 0 10px 1px #a6c8fd, 4px 3px 8px rgb(74 136 231 / 20%);
+  border: #45679c;
 }
 
 .speed__contanier {
@@ -111,7 +111,7 @@ body {
   justify-content: center;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), inset 0 2px 2px rgba(255, 255, 255, 0.2), inset 0 -2px 2px rgba(0, 0, 0, 0.4);
-  background: linear-gradient(176deg, #45679c 0%, #72a6fa 100%);
+  background: linear-gradient(176deg, #386094 0%, #72a6fa 100%);
   color: white;
 }
 
