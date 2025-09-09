@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 const Dropdown = ({ options, onSelect, defaultValue }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(defaultValue || options[0]);
+  const [selectedOption, setSelectedOption] = useState(
+    defaultValue || (options.length > 0 ? options[0] : null)
+  );
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -17,18 +19,18 @@ const Dropdown = ({ options, onSelect, defaultValue }) => {
   return (
     <div className="dropdown-container">
       <div className="dropdown-header" onClick={handleToggle}>
-        {selectedOption}
+        {selectedOption ? selectedOption.name : 'Выберите сервер...'}
         <span className="dropdown-arrow">▼</span>
       </div>
       {isOpen && (
         <ul className="dropdown-list">
-          {options.map((option, index) => (
+          {options.map((option) => (
             <li
-              key={index}
+              key={option.id} // Используем id как уникальный ключ
               className="dropdown-item"
               onClick={() => handleSelect(option)}
             >
-              {option}
+              {option.name} {/* Отображаем только имя */}
             </li>
           ))}
         </ul>

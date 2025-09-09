@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, Component } from "react";
+import { useRef, useState, useEffect, Component  } from "react";
 import Dropdown from './Dropdown';
 import Speedtest from "./lib/speedtest";
 
@@ -28,6 +28,7 @@ function App() {
   const [testState, setTestState] = useState(-1);
   const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(0);
+  const [selectedServer, setSelectedServer] = useState(null); 
 
   const speedtest = useRef(new Speedtest());
   const timerRef = useRef(null);
@@ -59,8 +60,12 @@ function App() {
     return () => clearInterval(timerRef.current);
   }, [testState]);
 
-
   const startStop = () => {
+    if (!selectedServer) {
+      alert('Выберите сервер');
+      return;
+    }
+
     if (speedtest.current.getState() === 3) {
       speedtest.current.abort();
       setUiData(null);
@@ -83,20 +88,29 @@ function App() {
         }
       };
 
-      speedtest.current.start();
-      setTestState(3);
+      console.log(selectedServer.id)
+
+      speedtest.current.start({ server: selectedServer.id }); 
     }
   };
 
-  const options = [`ООО 'Связь-энерго' Кострома`, `ООО 'Связь-энерго' Мирный`, `ООО 'Связь-энерго' Нерюнгри`];
+  const options = [
+    { id: 1, name: `ООО 'Связь-энерго' Кострома` },
+    { id: 2, name: `ООО 'Связь-энерго' Мирный` },
+    { id: 3, name: `ООО 'Связь-энерго' Нерюнгри` },
+  ];
   const handleSelect = (option) => {
-    console.log('Выбрана опция:', option);
+    setSelectedServer(option); 
   };
 
   return (
     <ErrorBoundary>
       <div className="testWrapper">
-        <Dropdown options={options} onSelect={handleSelect} defaultValue="Выбрать сервер..." />
+      <Dropdown
+          options={options}
+          onSelect={handleSelect}
+          defaultValue={{ id: 0, name: 'Выбрать сервер...' }} 
+        />
 
         {/* Download */}
         <div className="speed__contanier">

@@ -28,6 +28,8 @@ function twarn(s) {
 	console.warn(s);
 }
 
+let baseUrl = `https://r1.sv-en.ru:6443/`
+
 // настройки теста. могут быть переопределены при запуске команды
 let settings = {
     mpot: false, // установить в true для режима MPOT
@@ -38,10 +40,10 @@ let settings = {
     time_ulGraceTime: 3, // время ожидания перед измерением загрузки (сек)
     time_dlGraceTime: 2, // время ожидания перед измерением скачивания (сек)
     count_ping: 10, // количество пингов для теста
-    url_dl: "https://r1.sv-en.ru:6443/backend/garbage.php", // путь к файлу для теста скачивания
-    url_ul: "https://r1.sv-en.ru:6443/backend/empty.php", // путь к файлу для теста загрузки
-    url_ping: "https://r1.sv-en.ru:6443/backend/empty.php", // путь к файлу для теста пинга
-    url_getIp: "https://r1.sv-en.ru:6443/backend/getIP.php", // путь к getIP.php
+    url_dl: `${baseUrl}/backend/garbage.php`, // путь к файлу для теста скачивания
+    url_ul: `${baseUrl}/backend/empty.php`, // путь к файлу для теста загрузки
+    url_ping: `${baseUrl}/backend/empty.php`, // путь к файлу для теста пинга
+    url_getIp: `${baseUrl}/backend/getIP.php`, // путь к getIP.php
     getIp_ispInfo: true, // включать информацию об ISP с IP
     getIp_ispInfo_distance: "km", // оценка расстояния до сервера в км/милях
     xhr_dlMultistream: 10, // количество потоков скачивания
@@ -56,7 +58,7 @@ let settings = {
     overheadCompensationFactor: 1.1, // компенсация накладных расходов
     useMebibits: false, // использовать мебибиты вместо мегабит
     telemetry_level: 0, // 0=откл, 1=базовый, 2=полный, 3=отладка
-    url_telemetry: "https://r1.sv-en.ru:6443/results/telemetry.php", // путь к скрипту телеметрии
+    url_telemetry: `${baseUrl}/results/telemetry.php`, // путь к скрипту телеметрии
     telemetry_extra: "", // доп. данные для телеметрии
     forceIE11Workaround: false // обходной путь для IE11
 };
@@ -68,6 +70,28 @@ let test_pointer = 0; // указатель на следующий тест
 function url_sep(url) {
 	return url.match(/\?/) ? "&" : "?";
 }
+
+self.onmessage = function(e) {
+	const data = e.data;
+  
+	if (data.type === 'setServer') {
+	  const serverUrl = data.url;
+	  console.log('Получен сервер в воркере:', serverUrl);
+  
+	  // Обновляем baseUrl
+	  self.baseUrl = serverUrl;
+  
+	  // Обновляем настройки с новым baseUrl
+	  settings.url_dl = `${serverUrl}/backend/garbage.php`;
+	  settings.url_ul = `${serverUrl}/backend/empty.php`;
+	  settings.url_ping = `${serverUrl}/backend/empty.php`;
+	  settings.url_getIp = `${serverUrl}/backend/getIP.php`;
+	  settings.url_telemetry = `${serverUrl}/results/telemetry.php`;
+  
+	  // Подтверждаем обновление
+	  self.postMessage({ type: 'serverSet', success: true, url: serverUrl });
+	}
+  };
 
 // слушатель команд от основного потока
 self.addEventListener("message", function(e) {

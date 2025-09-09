@@ -75,124 +75,26 @@ Speedtest.prototype = {
     xhr.open("GET", url);
     xhr.send();
   },
-  getSelectedServer: function() {
-    if (this._state < 2 || this._selectedServer == null) throw "No server is selected";
-    return this._selectedServer;
-  },
-  setSelectedServer: function(server) {
-    this._checkServerDefinition(server);
-    if (this._state == 3) throw "You can't select a server while the test is running";
-    console.log("Выбран сервер: ", server);
-    this._selectedServer = server;
-    this._state = 2;
-  },
-  selectServer: function(result) {
-    if (this._state != 1) {
-      if (this._state == 0) throw "No test points added";
-      if (this._state == 2) throw "Server already selected";
-      if (this._state >= 3) throw "You can't select a server while the test is running";
-    }
-    if (this._selectServerCalled) throw "selectServer already called"; else this._selectServerCalled = true;
-    const select = function(serverList, selected) {
-      const PING_TIMEOUT = 10000;
-      let USE_PING_TIMEOUT = true;
-      if (/MSIE.(\d+\.\d+)/i.test(navigator.userAgent)) {
-        USE_PING_TIMEOUT = false;
+  start: function({server}) {
+    function getServer(server) {
+      switch (server) {
+        case 2:
+          return `https://st2.sv-en.ru/`
+        case 3:
+          return `https://st3.sv-en.ru/`
+        default:
+          return `https://r1.sv-en.ru:6443/`
       }
-      const ping = function(url, rtt) {
-        console.log("Отправляем пинг на URL:", url);
-        url += (url.match(/\?/) ? "&" : "?") + "cors=true";
-        let xhr = new XMLHttpRequest();
-        let t = new Date().getTime();
-        xhr.onload = function() {
-          let instspd = new Date().getTime() - t;
-          console.log("Ответ получен, задержка:", instspd, "мс");
-          try {
-            let p = performance.getEntriesByName(url);
-            p = p[p.length - 1];
-            let d = p.responseStart - p.requestStart;
-            if (d <= 0) d = p.duration;
-            if (d > 0 && d < instspd) instspd = d;
-          } catch (e) {}
-          rtt(instspd);
-        }.bind(this);
-        xhr.onerror = function() { rtt(-1); }.bind(this);
-        xhr.open("GET", url);
-        xhr.send();
-      }.bind(this);
-      const PINGS = 3, SLOW_THRESHOLD = 500;
-      const checkServer = function(server, done) {
-        let i = 0;
-        server.pingT = -1;
-        if (server.server.indexOf(location.protocol) == -1) done();
-        else {
-          const nextPing = function() {
-            if (i++ == PINGS) {
-              done();
-              return;
-            }
-            ping(server.server + server.pingURL, function(t) {
-              if (t >= 0) {
-                if (t < server.pingT || server.pingT == -1) server.pingT = t;
-                if (t < SLOW_THRESHOLD) nextPing();
-                else done();
-              } else done();
-            }.bind(this));
-          }.bind(this);
-          nextPing();
-        }
-      }.bind(this);
-      let i = 0;
-      const done = function() {
-        console.log("Завершение пинга. Выбираем лучший сервер...");
-        let bestServer = null;
-        for (let i = 0; i < serverList.length; i++) {
-          if (serverList[i].pingT != -1 && (bestServer == null || serverList[i].pingT < bestServer.pingT)) {
-            bestServer = serverList[i];
-          }
-        }
-        console.log("Лучший сервер выбран: ", bestServer);
-        selected(bestServer);
-      }.bind(this);
-      const nextServer = function() {
-        if (i == serverList.length) {
-          done();
-          return;
-        }
-        checkServer(serverList[i++], nextServer);
-      }.bind(this);
-      nextServer();
-    }.bind(this);
-    const CONCURRENCY = 6;
-    let serverLists = [];
-    for (let i = 0; i < CONCURRENCY; i++) {
-      serverLists[i] = [];
     }
-    for (let i = 0; i < this._serverList.length; i++) {
-      serverLists[i % CONCURRENCY].push(this._serverList[i]);
-    }
-    let completed = 0;
-    let bestServer = null;
-    for (let i = 0; i < CONCURRENCY; i++) {
-      select(serverLists[i], function(server) {
-        if (server != null) {
-          if (bestServer == null || server.pingT < bestServer.pingT) bestServer = server;
-        }
-        completed++;
-        if (completed == CONCURRENCY) {
-          this._selectedServer = bestServer;
-          this._state = 2;
-          if (result) result(bestServer);
-        }
-      }.bind(this));
-    }
-  },
-  start: function() {
+    
+    let baseUrl = getServer (server);
+
     if (this._state == 3) throw "Test already running";
 
     // Логируем создание воркера
     console.log("Создаю воркер: ", new URL('speedtest_worker.js', import.meta.url).href + '?r=' + Math.random());
     this.worker = new Worker(new URL('speedtest_worker.js', import.meta.url).href + '?r=' + Math.random());
+    this.worker.postMessage({ type: 'setServer', url: baseUrl });
 
     // Логируем worker после его создания
     console.log("Worker создан: ", this.worker);
