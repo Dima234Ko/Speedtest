@@ -110,6 +110,7 @@ function App() {
           options={options}
           onSelect={handleSelect}
           defaultValue={{ id: 0, name: 'Выбрать сервер...' }} 
+          className={testState !== -1 && testState !== 4 ? "running" : ""}
         />
 
         {/* Download */}

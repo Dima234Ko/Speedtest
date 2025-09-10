@@ -115,9 +115,7 @@ body {
   color: white;
 }
 
-.button.running {
-  background: #b9d3fd;
-  color: white;
+.running {
   opacity: 0.6;
   pointer-events: none;
 }

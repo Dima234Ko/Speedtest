@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Dropdown = ({ options, onSelect, defaultValue }) => {
+const Dropdown = ({ options, onSelect, defaultValue, className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(
     defaultValue || (options.length > 0 ? options[0] : null)
@@ -17,7 +17,7 @@ const Dropdown = ({ options, onSelect, defaultValue }) => {
   };
 
   return (
-    <div className="dropdown-container">
+    <div className={`dropdown-container ${className || ''}`}>
       <div className="dropdown-header" onClick={handleToggle}>
         {selectedOption ? selectedOption.name : 'Выберите сервер...'}
         <span className="dropdown-arrow">▼</span>
@@ -26,7 +26,7 @@ const Dropdown = ({ options, onSelect, defaultValue }) => {
         <ul className="dropdown-list">
           {options.map((option) => (
             <li
-              key={option.id} // Используем id как уникальный ключ
+              key={option.id} 
               className="dropdown-item"
               onClick={() => handleSelect(option)}
             >

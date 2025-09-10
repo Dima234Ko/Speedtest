@@ -83,7 +83,7 @@ Speedtest.prototype = {
         case 3:
           return `https://st3.sv-en.ru/`
         default:
-          return `https://r1.sv-en.ru:6443/`
+          return `https://st1.sv-en.ru/`
       }
     }
     
