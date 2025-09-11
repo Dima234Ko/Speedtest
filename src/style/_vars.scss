@@ -1,0 +1,57 @@
+// Цвета
+$white: #ffffff;
+$light-gray: #dfdfdf;
+$blue-1: #3498db;
+$blue-2: #a6c7fd52;
+$blue-3: rgba(42, 93, 176, 0.507);
+$blue-4: rgba(42, 93, 176, 0.3);
+$blue-5: rgba(248, 248, 248, 0);
+$dark-blue: #45679c;
+$gray: #555;
+$black: #333;
+$shadow-color: rgba(0, 0, 0, 0.2);
+$shadow-color-dark: rgba(0, 0, 0, 0.5);
+$shadow-color-light: rgba(255, 255, 255, 0.2);
+$shadow-color-darkest: rgba(20, 30, 50, 0.08);
+$light-blue-bg: #e6f0fa; // Фон выпадающего списка
+$light-blue-border: #d0e0f0; // Граница и фон при наведении
+$deep-blue: #1e4a8d; // Цвет текста при наведении
+
+// Размеры
+$font-size-base: 18px;
+$font-size-large: 20px;
+$font-size-small: 14px;
+$font-size-timer: 16px;
+$progress-height: 30px;
+$progress-border-radius: 30px;
+$button-height: 55px;
+$button-width: 360px;
+$margin-large: 20px;
+$margin-medium: 12px;
+$margin-small: 6px;
+$padding-large: 30px;
+$padding-medium: 10px;
+$padding-button: 24px;
+$test-wrapper-width: 400px;
+$gap-large: 40px;
+$gap-medium: 20px;
+$min-width-progress: 20%;
+$max-width-progress: 90%;
+
+// Тени
+$box-shadow-light: inset 0 1px 0 $shadow-color-light, 0 6px 18px $shadow-color-darkest;
+$box-shadow-button: 0 4px 6px $shadow-color, inset 0 2px 2px $shadow-color-light, inset 0 -2px 2px $shadow-color-dark;
+$box-shadow-progress-text: 0 4px 6px $shadow-color, inset 0 2px 2px $shadow-color-light, inset 0 -2px 2px $shadow-color-dark;
+$box-shadow-ping: inset 0 0 10px 1px $blue-2, 4px 3px 8px rgba(74, 136, 231, 0.2);
+
+// Градиенты
+$gradient-progress: linear-gradient(90deg, $blue-3 70%, $blue-4 80%, $blue-5 100%);
+$gradient-progress-text-low: linear-gradient(176deg, #5884be 0%, #a6c8fd 100%);
+$gradient-progress-text-normal: linear-gradient(176deg, #386094 0%, #72a6fa 100%);
+$gradient-button: linear-gradient(176deg, #386094 0%, #72a6fa 100%);
+
+// Прочие
+$text-shadow-light: 0 1px 0 rgba(255, 255, 255, 0.6);
+$text-shadow-dark: 1px 1px 2px $shadow-color-dark;
+$transition-width: width 0.5s cubic-bezier(.4, .8, .6, 1);
+$transition-color: color 0.3s ease;

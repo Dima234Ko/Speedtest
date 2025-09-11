@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, Component  } from "react";
-import Dropdown from './Dropdown';
+import Dropdown from './components/Dropdown';
 import Speedtest from "./lib/speedtest";
 
 class ErrorBoundary extends Component {

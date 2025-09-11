@@ -1,0 +1,69 @@
+@use 'vars' as *;
+
+.dropdown-container {
+  position: relative;
+
+  .dropdown-header {
+    color: $dark-blue;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: $box-shadow-ping;
+    border: $dark-blue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    width: 340px;
+    height: 32px;
+
+    .dropdown-arrow {
+      font-size: 12px;
+    }
+  }
+
+  .dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: $light-blue-bg;
+    border-radius: 30px;
+    box-shadow: $box-shadow-button;
+    margin-top: 5px;
+    list-style: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 2;
+    animation: slideDown 0.3s ease-out;
+
+    .dropdown-item {
+      padding: 10px 15px;
+      color: $dark-blue;
+      cursor: pointer;
+      border-bottom: 1px solid $light-blue-border;
+
+      &:hover {
+        background: $light-blue-border;
+        color: $deep-blue;
+      }
+
+      &:last-child {
+        border-bottom: none;
+        border-radius: 0 0 10px 10px;
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
