@@ -88,8 +88,6 @@ function App() {
         }
       };
 
-      console.log(selectedServer.id)
-
       speedtest.current.start({ server: selectedServer.id }); 
     }
   };

@@ -76,7 +76,6 @@ self.onmessage = function(e) {
   
 	if (data.type === 'setServer') {
 	  const serverUrl = data.url;
-	  console.log('Получен сервер в воркере:', serverUrl);
   
 	  // Обновляем baseUrl
 	  self.baseUrl = serverUrl;
@@ -649,7 +648,6 @@ function sendTelemetry(done) {
 		}
 	};
 	xhr.onerror = function() {
-		console.log("ОШИБКА ТЕЛЕМЕТРИИ " + xhr.status);
 		done(null);
 	};
 	xhr.open("POST", settings.url_telemetry + url_sep(settings.url_telemetry) + (settings.mpot ? "cors=true&" : "") + "r=" + Math.random(), true);

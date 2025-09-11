@@ -8,7 +8,6 @@ function Speedtest() {
 Speedtest.prototype = {
   constructor: Speedtest,
   getState: function() { 
-    console.log("Текущее состояние:", this._state);
     return this._state; 
   },
   setParameter: function(parameter, value) {
@@ -16,7 +15,6 @@ Speedtest.prototype = {
       console.error("Невозможно изменить настройки во время выполнения теста.");
       throw "You cannot change the test settings while running the test";
     }
-    console.log(`Устанавливаем параметр: ${parameter} = ${value}`);
     this._settings[parameter] = value;
     if (parameter === "telemetry_extra") {
       this._originalExtra = this._settings.telemetry_extra;
@@ -43,13 +41,11 @@ Speedtest.prototype = {
     if (this._state != 1) throw "You can't add a server after server selection";
     this._settings.mpot = true;
     this._serverList.push(server);
-    console.log("Добавлен тестовый сервер:", server);
   },
   addTestPoints: function(list) {
     for (let i = 0; i < list.length; i++) this.addTestPoint(list[i]);
   },
   loadServerList: function(url, result) {
-    console.log("Загружаем список серверов с URL: ", url);
     if (this._state == 0) this._state = 1;
     if (this._state != 1) throw "You can't add a server after server selection";
     this._settings.mpot = true;
@@ -57,7 +53,6 @@ Speedtest.prototype = {
     xhr.onload = function() {
       try {
         const servers = JSON.parse(xhr.responseText);
-        console.log("Список серверов загружен:", servers);
         for (let i = 0; i < servers.length; i++) {
           this._checkServerDefinition(servers[i]);
         }
@@ -91,51 +86,42 @@ Speedtest.prototype = {
 
     if (this._state == 3) throw "Test already running";
 
-    // Логируем создание воркера
-    console.log("Создаю воркер: ", new URL('speedtest_worker.js', import.meta.url).href + '?r=' + Math.random());
     this.worker = new Worker(new URL('speedtest_worker.js', import.meta.url).href + '?r=' + Math.random());
     this.worker.postMessage({ type: 'setServer', url: baseUrl });
 
-    // Логируем worker после его создания
-    console.log("Worker создан: ", this.worker);
 
     this.worker.onmessage = function(e) {
       if (e.data === this._prevData) return;
       else this._prevData = e.data;
-      const data = JSON.parse(e.data);
 
-      // Логируем данные, полученные от воркера
-      console.log("Получены данные от Worker:", data);
+      if (typeof e.data === 'string'){
 
-      try {
-        if (this.onupdate) this.onupdate(data);
-      } catch (e) {
-        console.error("Speedtest onupdate event threw exception: " + e);
-      }
-
-      if (data.testState >= 4) {
-        clearInterval(this.updater);
-        this._state = 4;
-
-        // Логируем, когда тест завершен
-        console.log("Тест завершен. Состояние теста:", data.testState);
+        const data = JSON.parse(e.data);
 
         try {
-          if (this.onend) this.onend(data.testState == 5);
+          if (this.onupdate) this.onupdate(data);
         } catch (e) {
-          console.error("Speedtest onend event threw exception: " + e);
+          console.error("Speedtest onupdate event threw exception: " + e);
+        }
+
+        if (data.testState >= 4) {
+          clearInterval(this.updater);
+          this._state = 4;
+
+
+          try {
+            if (this.onend) this.onend(data.testState == 5);
+          } catch (e) {
+            console.error("Speedtest onend event threw exception: " + e);
+          }
         }
       }
     }.bind(this);
 
-    // Логируем процесс отправки сообщений
     this.updater = setInterval(function() {
-      console.log("Отправка запроса 'status' воркеру...");
       this.worker.postMessage("status");
     }.bind(this), 200);
 
-    // Логирование состояния перед запуском
-    console.log("Текущее состояние перед запуском:", this._state);
 
     if (this._state == 1) throw "When using multiple points of test, you must call selectServer before starting the test";
     if (this._state == 2) {
@@ -157,7 +143,6 @@ Speedtest.prototype = {
     }
 
     this._state = 3;
-    console.log("Тест начинается. Отправка данных в воркер...");
     this.worker.postMessage("start " + JSON.stringify(this._settings));
   },
   abort: function() {
