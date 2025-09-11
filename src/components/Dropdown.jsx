@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Dropdown = ({ options, onSelect, defaultValue, className }) => {
+const Dropdown = ({ options, onSelect, defaultValue, className, testState }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(
     defaultValue || (options.length > 0 ? options[0] : null)
@@ -22,7 +22,7 @@ const Dropdown = ({ options, onSelect, defaultValue, className }) => {
         {selectedOption ? selectedOption.name : 'Выберите сервер...'}
         <span className="dropdown-arrow">▼</span>
       </div>
-      {isOpen && (
+      {isOpen && ![1, 2, 3].includes(testState) && (
         <ul className="dropdown-list">
           {options.map((option) => (
             <li

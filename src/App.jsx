@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect, Component  } from "react";
+import { useRef, useState, useEffect, Component } from "react";
 import Dropdown from './components/Dropdown';
 import Speedtest from "./lib/speedtest";
+import { getIpInfo } from "./examination"
 
 class ErrorBoundary extends Component {
   state = { hasError: false, error: null };
@@ -9,13 +10,21 @@ class ErrorBoundary extends Component {
     return { hasError: true, error };
   }
 
+  async componentDidMount() {
+    try {
+      const response = await getIpInfo();
+    } catch (err) {
+      this.setState({ hasError: true, error: err });
+    }
+  }
+
   render() {
     if (this.state.hasError) {
       return (
         <div style={{ textAlign: "center", padding: "2em", color: "#ff0000" }}>
           <h2>Произошла ошибка</h2>
           <p>{this.state.error?.message || "Неизвестная ошибка"}</p>
-          <p>Пожалуйста, перезагрузите страницу или свяжитесь с поддержкой.</p>
+          <p>Доступ к сервису ограничен для данного IP</p>
         </div>
       );
     }
@@ -23,12 +32,13 @@ class ErrorBoundary extends Component {
   }
 }
 
+
 function App() {
   const [uiData, setUiData] = useState(null);
   const [testState, setTestState] = useState(-1);
   const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(0);
-  const [selectedServer, setSelectedServer] = useState(null); 
+  const [selectedServer, setSelectedServer] = useState(null);
 
   const speedtest = useRef(new Speedtest());
   const timerRef = useRef(null);
@@ -88,7 +98,7 @@ function App() {
         }
       };
 
-      speedtest.current.start({ server: selectedServer.id }); 
+      speedtest.current.start({ server: selectedServer.id });
     }
   };
 
@@ -98,17 +108,18 @@ function App() {
     { id: 3, name: `ООО 'Связь-энерго' Нерюнгри` },
   ];
   const handleSelect = (option) => {
-    setSelectedServer(option); 
+    setSelectedServer(option);
   };
 
   return (
     <ErrorBoundary>
       <div className="testWrapper">
-      <Dropdown
+        <Dropdown
           options={options}
           onSelect={handleSelect}
-          defaultValue={{ id: 0, name: 'Выбрать сервер...' }} 
-          className={testState !== -1 && testState !== 4 ? "running" : ""}
+          defaultValue={{ id: 0, name: 'Выбрать сервер...' }}
+          className=""
+          testState={testState}
         />
 
         {/* Download */}
@@ -158,7 +169,7 @@ function App() {
         )}
 
         {/* IP */}
-        <div id="ipArea">
+        <div className="ipText" id="ipArea">
           <span id="ip">{uiData?.clientIp}</span>
         </div>
 

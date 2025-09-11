@@ -1,8 +1,8 @@
 @use 'vars' as *;
 @use 'header';
 @use 'dropdown';
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Cinzel:wght@400..900&display=swap');
 
-// Базовые стили
 html,
 body {
   border: none;
@@ -15,7 +15,7 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    font-family: monospace, sans-serif;
+    font-family: "Cormorant Garamond", serif;
     font-size: $font-size-base;
     background: $white;
   }
@@ -51,8 +51,8 @@ body {
     pointer-events: none;
     transition: $transition-color;
     color: $white;
+    font-family: "Cinzel", serif;
     font-size: $font-size-large;
-    font-weight: bold;
     text-shadow: $text-shadow-dark;
     border-radius: 40px;
     padding: 17px;
@@ -93,9 +93,13 @@ body {
     display: flex;
     flex-direction: column;
     justify-self: center;
-    gap: $gap-medium;
+    gap: $gap-large;
     width: 100%;
   }
+}
+
+.ipText {
+  font-family: "Cinzel", serif;
 }
 
 .button {
@@ -139,17 +143,36 @@ body {
 
 
 @media (max-width: 650px) {
+  
+  html,
+  body  {
+    body {
+      font-size: $font-size-small;
+    }
+  }
+
   .testWrapper {
       width: 300px;
       gap: 20px;
   }
 
-  .progress-bar {
-      min-width: 15%;
+  .progress {
+    height: 20px;
+  
+
+    .progress-bar {
+        min-width: 15%;
+    }
+  
+    .progress-text {
+        padding: 12px;
+        font-size: $font-size-small;
+    }
   }
 
   .button {
-      width: 300px;
+    width: 300px;
+    height: 50px;
   }
 
   .speed__contanier {
@@ -157,17 +180,16 @@ body {
       gap: 12px;
   }
 
-  .progress-text {
-      padding: 14px;
-  }
+  .dropdown-container {
+    .dropdown-header {
+        width: 270px;
+        height: 24px;
+        font-size: 12px;
+    }
 
-  .dropdown-header {
-      width: 270px;
-      font-size: 12px;
-  }
-
-  .dropdown-item {
-      font-size: 12px;
+    .dropdown-item {
+        font-size: 12px;
+    }
   }
 }
 
@@ -182,5 +204,12 @@ body {
 
   .button {
       width: 200px;
+  }
+
+  .dropdown-container {
+    .dropdown-header {
+        width: 170px;
+        height: 24px;
+    }
   }
 }
